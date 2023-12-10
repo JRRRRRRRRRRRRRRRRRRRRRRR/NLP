@@ -20,7 +20,7 @@ most_similar_song, similarity_score = find_most_similar_song(songs, user_input)
 
 
 # STEP 4: Find most similar song based on sentiment
-user_sentiment, user_sentiment_score = perform_sentiment_analysis(user_input)
+user_sentiment_score = perform_sentiment_analysis(user_input)
 
 current_song = None
 difference = 1000
