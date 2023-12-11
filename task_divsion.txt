@@ -5,14 +5,13 @@ X   Topic modelling (OpenAI? pls) K
         Integrate topic modelling
     Figure out how to combine all methods G
     Think of optimal questions to extract emotion B
-    Replace the songs in lyrics.jl with a representative sample that covers a wide range of styles/emotions
         What word would you use to describe your life right now
+    Replace the songs in lyrics.jl with a representative sample that covers a wide range of styles/emotions B/F
     Implement questionaire (3-5 questions) F
         Implement CLI (answer = input('question 1'))
         Make sure the right NLP methods are performed on the right questions.
 
 Next time:
-    add some more diverse songs to the file
     Set up user-tests
     Do said user-tests
     Small analysis of dataset

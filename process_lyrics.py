@@ -4,6 +4,8 @@ import json
 
 from helper import clean_lyrics, perform_sentiment_analysis, extract_topics
 
+# TODO Britt/Fedde:  Replace the songs in lyrics.jl with a representative sample that covers a wide range of styles/emotions
+
 # STEP 1: Data cleaning
 # Load the songs in a dictionary and clean unnecessary chars from lyrics
 songs = clean_lyrics('lyrics.jl')
@@ -35,6 +37,8 @@ for song in sentiment_topics:
     topics = extract_topics(song_lyrics)
     song['topics'] = topics
 
+
+# STEPT 5: Save analysis
 with open('sentiment_topics.json', 'w') as file:
     json.dump(sentiment_topics, file)
 

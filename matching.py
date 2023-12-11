@@ -15,11 +15,11 @@ with open('songs.json', 'r') as file:
 user_input = input('gimme\n')
 
 
-# STEP 3: Find most similar song based on embeddings
+# STEP 3: Find best fitting song based on embeddings
 most_similar_song, similarity_score = find_most_similar_song(songs, user_input)
 
 
-# STEP 4: Find most similar song based on sentiment
+# STEP 4: Find best fitting song based on sentiment
 user_sentiment_score = perform_sentiment_analysis(user_input)
 
 current_song = None
@@ -30,6 +30,14 @@ for song in sentimen_topics:
         difference = abs(sentiment_score - user_sentiment_score)
         current_song = song['song_title']
 
-# STEP 5: Print the results
+# STEP 5: Find best fitting song based on topic analysis
+# TODO Koen: implement topic matching
+
+
+# STEP 6: Find best fitting song based on combination of embeddings, sentiment and topics
+# TODO Gijs: implement combining techniques
+
+
+# STEP 7: Print the results
 print(f'based on embeddings, your song is: {most_similar_song}')
 print(f'based on sentiment, your song is: {current_song}')
