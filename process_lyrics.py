@@ -2,7 +2,7 @@ from sentence_transformers import SentenceTransformer
 import torch
 import json
 
-from helper import clean_lyrics, perform_sentiment_analysis
+from helper import clean_lyrics, perform_sentiment_analysis, extract_topics
 
 # STEP 1: Data cleaning
 # Load the songs in a dictionary and clean unnecessary chars from lyrics
@@ -29,7 +29,11 @@ for song in songs:
 
 # STEP 4: Topics
 # Extract topics from the songs using GPT3.5
-# TODO
+for song in sentiment_topics:
+    song_title = song['song_title']
+    song_lyrics = songs[song_title]
+    topics = extract_topics(song_lyrics)
+    song['topics'] = topics
 
 with open('sentiment_topics.json', 'w') as file:
     json.dump(sentiment_topics, file)

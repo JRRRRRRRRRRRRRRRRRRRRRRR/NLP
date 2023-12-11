@@ -1,8 +1,21 @@
 import re
 import torch
 from sentence_transformers import util, SentenceTransformer
-
+from openai import OpenAI
+import json
 from transformers import pipeline
+import os
+
+try:
+    with open('api_keys.json', 'r') as file:
+        keys = json.load(file)
+    os.environ["OPENAI_API_KEY"]  = keys['OPENAI_API_KEY']
+except FileNotFoundError:
+    print('There is no api_keys.json file. please add one.')
+    os.environ["OPENAI_API_KEY"]  = keys['OPENAI_API_KEY']
+except KeyError:
+    print('There is no OpenAI API key provided in  api_keys.json')
+os.environ["TOKENIZERS_PARALLELISM"] = 'true'
 
 
 def clean_lyrics(filename):
@@ -82,3 +95,55 @@ def perform_sentiment_analysis(text):
     average_score = sum(float(result['label'].split()[0]) for result in results) / len(results)
     
     return average_score
+
+def extract_topics(text):
+    topic_extraction_prompt = f"""
+    Analyze the following text and extract 5 main topics.
+    Each topic should be no more than two words.
+    Provide the topics in JSON format under the key 'topics'.
+
+    Text: "{text}"
+
+    Expected Output Format: 
+    {{
+      "topics": ["topic 1", "topic 2", "topic 3", "topic 4", "topic 5"]
+    }}
+    """
+    client = OpenAI()
+    try:
+        topics = client.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {"role": "user", "content": topic_extraction_prompt}
+            ],
+            temperature=0
+        )
+        response = topics.choices[0].message.content.strip()
+
+        # Extracting JSON part from the response
+        json_start = response.find('{')
+        json_end = response.rfind('}') + 1
+        if json_start != -1 and json_end != -1:
+            json_response = response[json_start:json_end]
+            topics_dict = json.loads(json_response)
+            topiclist = topics_dict.get("topics")
+            if isinstance(topiclist, list):
+                return topiclist
+            else:
+                raise TypeError("Extracted topics are not in list format.")
+        else:
+            raise ValueError("No JSON response found in the output.")
+    except json.JSONDecodeError:
+        print("Error parsing JSON from the response.")
+        print("Response: ", response)
+    except (KeyError, ValueError) as e:
+        print(e)
+        print("Response: ", response)
+    except TypeError as e:
+        print(e)
+        print("Response: ", response)
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        print("Response: ", response)
+    print('Provided non-sense topics')
+    return ['', '', '', '', '']
