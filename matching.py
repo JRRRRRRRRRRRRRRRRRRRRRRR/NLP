@@ -11,8 +11,25 @@ with open('songs.json', 'r') as file:
 
 
 # STEP 2: User questionaire
-# TODO Fedde/Britt: implement the new questions
-user_input = input('gimme\n')
+# Two strings. One stores input for semantic analysis and the second for topic modelling.
+user_input_for_smanalysis = ''
+user_input_for_topic_modelling = ''
+
+# Ask three questions and store the answers
+question_1 = input("How are you doing?")
+user_input_for_smanalysis += question_1
+
+question_2 = input("If you were being completely honest with me, how would you describe your feelings lately?")
+user_input_for_smanalysis += question_2
+
+question_3 = input("What word would you use to describe your life right now?")
+user_input_for_topic_modelling += question_3
+
+question_4 = input("What did you do today?")
+user_input_for_topic_modelling += question_4
+
+#Variable that sums up all the users input
+user_input = user_input_for_smanalysis + user_input_for_topic_modelling
 
 
 # STEP 3: Find best fitting song based on embeddings
