@@ -22,11 +22,19 @@ user_input_for_smanalysis += question_1
 question_2 = input("If you were being completely honest with me, how would you describe your feelings lately?")
 user_input_for_smanalysis += question_2
 
-question_3 = input("What word would you use to describe your life right now?")
-user_input_for_topic_modelling += question_3
+question_3 = input("If you could choose a color to describe your current mood, what would it be?")#Colors are often associated with emotions (like blue for sadness, red for anger, yellow for happiness)
+user_input_for_smanalysis += question_3
 
-question_4 = input("What did you do today?")
+question_4 = input("What word would you use to describe your life right now?")
 user_input_for_topic_modelling += question_4
+
+question_5 = input("What did you do today?")
+user_input_for_topic_modelling += question_5
+
+question_6 = input("What's a memory that has been influencing your emotions today?")#The memories they share can be a powerful indicator of their deeper feelings
+user_input_for_topic_modelling += question_6
+
+
 
 #Variable that sums up all the users input
 user_input = user_input_for_smanalysis + user_input_for_topic_modelling
