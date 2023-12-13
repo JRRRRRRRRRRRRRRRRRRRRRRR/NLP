@@ -1,6 +1,6 @@
 import json
 
-from helper import find_most_similar_song, perform_sentiment_analysis
+from helper import find_most_similar_song, perform_sentiment_analysis, extract_topics
 
 
 # STEP 1: Load song lyrics and analysis from files
@@ -49,6 +49,7 @@ for song in sentimen_topics:
 
 # STEP 5: Find best fitting song based on topic analysis
 # TODO Koen: implement topic matching
+topics = extract_topics(user_input_for_topic_modelling)
 
 
 # STEP 6: Find best fitting song based on combination of embeddings, sentiment and topics
