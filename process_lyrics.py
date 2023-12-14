@@ -8,7 +8,7 @@ from helper import clean_lyrics, perform_sentiment_analysis, extract_topics
 
 # STEP 1: Data cleaning
 # Load the songs in a dictionary and clean unnecessary chars from lyrics
-songs = clean_lyrics('handpicked_lyrics.jl')
+songs = clean_lyrics('handpicked_lyrics_short.jl')
 
 
 # STEP 2: Embeddings

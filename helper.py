@@ -71,6 +71,26 @@ def find_most_similar_song(songs, user_input):
     return most_similar_song, similarities[index].item()
 
 
+def find_all_similar_songs(songs, user_input):
+    """
+    model: pretrained embeddings model
+    songs: dictionary with all the songs and lyrics
+    user_input: string with users' reaction to a question
+    
+    ---
+    Returns a dictionary containing all songs and their similarities to the user input
+    """
+    model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+    song_embeddings = torch.load('lyrics_embeddings.pt')
+    user_embedding = model.encode(user_input, convert_to_tensor=True)
+    similarities = util.pytorch_cos_sim(user_embedding, song_embeddings)[0]
+    
+    # Create a dictionary with song names as keys and similarity values as values
+    similar_songs = {song: similarity.item() for song, similarity in zip(songs.keys(), similarities)}
+    
+    return similar_songs
+
+
 def perform_sentiment_analysis(text):
     """
     text: string to perform the sentiment analysis on
@@ -178,6 +198,7 @@ def match_topics(topics_list, songs):
     - Note the topics for each item.
     - Explain the reasoning for the score, highlighting any direct matches or thematic similarities.
     - Assign a score based on the explanation.
+    - Determine the single item with the best match
 
     Then, I'll compile the evaluations into a JSON format, indicating the scores and the 'best_match'.
 
@@ -196,14 +217,14 @@ def match_topics(topics_list, songs):
       0: 70,
       1: 90,
       ...
-      'best_match': [index of the item with the highest score]
+      'best_match': index of the single item with the highest score as int
     }}
     """
 
     client = OpenAI()
     try:
         topics = client.chat.completions.create(
-            model="gpt-4-1106-preview",
+            model= "gpt-4-1106-preview",
             messages=[
                 {"role": "user", "content": topic_matching_prompt}
             ],
@@ -235,3 +256,9 @@ def match_topics(topics_list, songs):
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
         print("Response: ", response)
+
+def lscore(e, s, t):
+    """
+    TODO
+    """
+    return e + 3 * s + t
