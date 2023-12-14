@@ -165,36 +165,52 @@ def match_topics(topics_list, songs):
     dataset = ""
     for i, song in enumerate(songs):
         dataset += f"{i}. {str(song['topics'])} \n"
+    
     topic_matching_prompt = f"""
-    Given a user's list of topics and a dataset of songs with their respective topics,
-    calculate a matching score for each song based on the thematic similarity between the user's topics and the song's topics.
-    The score should range from 1 to 100, with 100 indicating a perfect match.
+    Given a user's list of topics '{str(topics_list)}' and a dataset of items with their respective topics, I will evaluate and score each item based on thematic similarity and direct topic matches.
 
-    When evaluating similarity, consider not only exact matches but also related concepts. For example, if the user's topic is 'school', songs with topics like 'teacher', 'education', or 'learning' could also score high. Similarly, for a user's topic like 'game', related topics like 'soccer', 'play', or 'competition' might warrant higher scores.
+    For each item, I'll analyze its topics in relation to the user's topics. I'll first provide a brief explanation considering both thematic similarity and direct matches, and then assign a score from 0 to 100 based on this analysis, with a higher score for more closely related or directly matching topics.
 
-    Please provide the output directly in JSON format.
-    Each entry should consist of the song index as the key and its matching score as the value.
-    Also, include a separate entry named 'best_match' to indicate the index of the song that has the highest matching score with the user's topics.
-
-    User's Topics: "{str(topics_list)}"
-
-    Dataset of Songs and Their Topics:
+    Dataset of Items and Their Topics:
     {dataset}
 
-    Using the given guidelines, please provide a nuanced scoring for each song in the dataset, ensuring that the scores reflect both direct and thematic similarities.
+    Evaluation Process:
+    - Note the topics for each item.
+    - Explain the reasoning for the score, highlighting any direct matches or thematic similarities.
+    - Assign a score based on the explanation.
 
-    I only need the JSON output showing the matching scores and the best match, without any additional code or explanation.
+    Then, I'll compile the evaluations into a JSON format, indicating the scores and the 'best_match'.
+
+    Let's start the evaluation:
+
+    [The model will go through each item, explain the reasoning based on similarity and direct matches, and then assign a score. For example:]
+    - Item 0's topics: ['love', 'night']. Reasoning: Good thematic similarity with 'dance' and 'club', but no direct match. Score: 70.
+    - Item 1's topics: ['dance', 'joy']. Reasoning: Direct match with 'dance' and thematically similar to 'club'. Score: 90.
+
+    [This process continues for all items]
+
+    After evaluating all items:
+
+    JSON Output:
+    {{
+      0: 70,
+      1: 90,
+      ...
+      'best_match': [index of the item with the highest score]
+    }}
     """
+
     client = OpenAI()
     try:
         topics = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4-1106-preview",
             messages=[
                 {"role": "user", "content": topic_matching_prompt}
             ],
             temperature=0
         )
         response = topics.choices[0].message.content.strip()
+        print(topics.choices[0].message.content.strip())
 
         # Extracting JSON part from the response
         json_start = response.find('{')

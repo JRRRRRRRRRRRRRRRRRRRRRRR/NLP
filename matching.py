@@ -55,7 +55,6 @@ for song in sentimen_topics:
         best_sentiment_match = song['song_title']
 
 # STEP 5: Find best fitting song based on topic analysis
-# TODO Koen: implement topic matching
 topics = extract_topics(user_input_for_topic_modelling)
 print(topics)
 """
