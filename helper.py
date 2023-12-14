@@ -231,7 +231,6 @@ def match_topics(topics_list, songs):
             temperature=0
         )
         response = topics.choices[0].message.content.strip()
-        print(topics.choices[0].message.content.strip())
 
         # Extracting JSON part from the response
         json_start = response.find('{')

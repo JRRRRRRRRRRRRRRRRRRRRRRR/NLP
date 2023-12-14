@@ -19,8 +19,7 @@ user_input_for_smanalysis = ''
 user_input_for_topic_modelling = ''
 
 # Ask questions and store the answers
-question_0 = input("What's your test number?")
-
+question_0 = input("What's your test number?\n")
 question_1 = input("How are you doing?\n")
 user_input_for_smanalysis += question_1 + '.\n'
 
@@ -52,15 +51,6 @@ b_embed_matches = find_all_similar_songs(songs, user_input)
 # STEP 4: Find best fitting song based on sentiment
 user_sentiment_score = perform_sentiment_analysis(user_input)
 
-# difference = 1000
-# for song in sentimen_topics:
-#     sentiment_score = song['sentiment_score']
-#     if abs(sentiment_score - user_sentiment_score) < difference:
-#         difference = abs(sentiment_score - user_sentiment_score)
-#         best_sentiment_match = song['song_title']
-
-# ADJUSTED step 4: find best fitting songs (plural) based on sentiment
-
 s_res = []
 for song in sentimen_topics:
     s_score = song['sentiment_score']
@@ -75,25 +65,11 @@ print(f'based on embeddings, your song is: {best_embedding_match}')
 print(f'based on sentiment, your song is: {best_sentiment_match}')
 
 # STEP 5: Find best fitting song based on topic analysis
-# TODO Koen: implement topic matching
 topics = extract_topics(user_input_for_topic_modelling)
-print(topics)
-
-# FOR TESTING:
 score_dict, best_topic_match = match_topics(topics, sentimen_topics)
-print(score_dict)
-print(best_topic_match)
 
 
 # STEP 6: Find best fitting song based on combination of embeddings, sentiment and topics
-# TODO Gijs: implement combining techniques
-
-# def mscore(e, s, t):
-#     return e*s**2*t
-
-
-
-
 best_combination_match = ''
 maxi = 0
 for song in songs:
@@ -106,7 +82,14 @@ for song in songs:
     
 
 # STEP 7: Print the results
-print(f"##### TEST NUMBER {question_0} #####")
+print(f"\n##### TEST NUMBER {question_0} #####")
+print(question_1)
+print(question_2)
+print(question_3)
+print(question_4)
+print(question_5)
+print(question_6)
+print(f'the following topics were identified: {topics}')
 print(f'based on embeddings, your song is: {best_embedding_match}')
 print(f'based on sentiment, your song is: {best_sentiment_match}')
 print(f'based on topics, your song is: {best_topic_match}')
