@@ -4,10 +4,9 @@ import json
 
 from helper import clean_lyrics, perform_sentiment_analysis, extract_topics
 
-# TODO Britt/Fedde:  Replace the songs in lyrics.jl with a representative sample that covers a wide range of styles/emotions
 
 # STEP 1: Data cleaning
-# Load the songs in a dictionary and clean unnecessary chars from lyrics
+# Load the songs in a dictionary and clean unnecessary chararcters from lyrics
 songs = clean_lyrics('handpicked_lyrics_short.jl')
 
 

@@ -1,10 +1,10 @@
 import re
+import os
 import torch
+import json
 from sentence_transformers import util, SentenceTransformer
 from openai import OpenAI
-import json
 from transformers import pipeline
-import os
 
 try:
     with open('api_keys.json', 'r') as file:
@@ -12,7 +12,6 @@ try:
     os.environ["OPENAI_API_KEY"]  = keys['OPENAI_API_KEY']
 except FileNotFoundError:
     print('There is no api_keys.json file. please add one.')
-    os.environ["OPENAI_API_KEY"]  = keys['OPENAI_API_KEY']
 except KeyError:
     print('There is no OpenAI API key provided in  api_keys.json')
 os.environ["TOKENIZERS_PARALLELISM"] = 'true'
@@ -118,7 +117,10 @@ def perform_sentiment_analysis(text):
 
 def extract_topics(text):
     """
-    TODO
+    text: string to perform the topic extraction on
+
+    ---
+    Returns a list with the extracted topics from the text
     """
     topic_extraction_prompt = f"""
     Analyze the following text and extract 5 main topics.
@@ -258,6 +260,11 @@ def match_topics(topics_list, songs):
 
 def lscore(e, s, t):
     """
-    TODO
+    e: embedding score
+    s: sentiment score
+    t: topic score
+
+    ---
+    Returns a linear combination of the provided scores
     """
     return e + 3 * s + t

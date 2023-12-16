@@ -13,8 +13,8 @@ res = []
 for song in songs:
     res.append(song)
 
+
 # STEP 2: User questionaire
-# Two strings. One stores input for semantic analysis and the second for topic modelling.
 user_input_for_smanalysis = ''
 user_input_for_topic_modelling = ''
 
@@ -36,17 +36,16 @@ question_5 = input("What did you do today?\n")
 user_input_for_topic_modelling += question_5 + '.\n'
 
 question_6 = input("What's a memory that has been influencing your emotions today?\n")
-user_input_for_topic_modelling += question_6 + '.\n'
+user_input_for_topic_modelling += question_6
 
-
-
-#Variable that sums up all the users input
+# Variable that sums up all the users input (for embeddings)
 user_input = user_input_for_smanalysis + user_input_for_topic_modelling
 
 
 # STEP 3: Find best fitting song based on embeddings
 best_embedding_match, similarity_score = find_most_similar_song(songs, user_input)
 b_embed_matches = find_all_similar_songs(songs, user_input)
+
 
 # STEP 4: Find best fitting song based on sentiment
 user_sentiment_score = perform_sentiment_analysis(user_input)
@@ -61,8 +60,6 @@ best_sentiment_matches = {entry['song']: entry['sentiment_match'] for entry in s
 
 best_sentiment_match = max(best_sentiment_matches, key=best_sentiment_matches.get)
 
-print(f'based on embeddings, your song is: {best_embedding_match}')
-print(f'based on sentiment, your song is: {best_sentiment_match}')
 
 # STEP 5: Find best fitting song based on topic analysis
 topics = extract_topics(user_input_for_topic_modelling)
