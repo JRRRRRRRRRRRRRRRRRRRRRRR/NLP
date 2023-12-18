@@ -22,3 +22,5 @@ The following files are in the project:
 	- **handpicked_lyrics.jl**: 100 handpicked songs from the Genius, The songs are chosen to get diversity in genre, topics and sentiment.
 	- **handpicked_lyrics_short.jl**: 50 randomly selected songs from handpicked_lyrics.jl (the topic analysis doesn't work properly for the bigger dataset).
 - **helper.py**: contains all the helper functions: clean_lyrics, find_most_similar_song, find_all_similar_songs, perform_sentiment_analysis, extract_topics, match_topics, lscore
+- **lyrics_data_analysis.ipynb**: A jupyter notebook that contains all the code to generate all the plots for the data analysis.
+- **Data_analysis**: A folder with all the plots for the data analysis
